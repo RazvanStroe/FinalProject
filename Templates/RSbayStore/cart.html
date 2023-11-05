@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box-element">
+                <a class="btn btn-outline-dark" href="{% url 'products' %}">&#x21A9; Continue shopping</a>
+
+                <table class="table">
+                    <tr>
+                        <th><h5>Products: <strong>{{order.total_cart_products}}</strong></h5></th>
+                        <th><h5>Total price: <strong>{{order.total_cart_price|floatformat:2}}</strong></h5></th>
+                        <th>
+                            <a style="float:right; margin:50px" class="btn btn-success" href="{% url 'checkout' %}">Continue to Checkout</a>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div class="box-element">
+                <div class="cart-row">
+                    <div style="flex:3"></div>
+                    <div style="flex:3"><strong>Product</strong></div>
+                    <div style="flex:2"><strong>Price</strong></div>
+                    <div style="flex:2"><strong>Quantity</strong></div>
+                    <div style="flex:2"><strong>Total price</strong></div>
+                </div>
+            </div>
+            {% for product in products %}
+            <div class="cart-row">
+                <div style="flex:3"><img class="row-image" src="{{product.product.thumbnail_url}}"></div>
+                <div style="flex:3">{{product.product.name}}</div>
+                <div style="flex:2">{{product.product.price}}</div>
+                <div style="flex:2">
+                    <p class="quantity">{{product.quantity}}</p>
+                    <div class="quantity">
+                        <img class="chg-quantity" src="{% static 'images/arrowup.jpg' %}">
+                        <img class="chg-quantity" src="{% static 'images/arrowdown.jpg' %}">
+                    </div>
+                </div>
+                <div style="flex:2">{{product.total_products_price}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+
+{% block title %}Show Users{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Date Joined</th>
+
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.date_joined|date:"d.m.Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

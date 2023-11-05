@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<!--<form method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    {{form.as_p}}-->
+<!--    <input type="Submit" value="Login">-->
+<!--</form>-->
+    <section>
+        <div class="form-container">
+            <h1>Login</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="control has-icons-left has-icons-right">
+                    <label class="label">Username</label>
+                    <input type="text" name="username" id="id_username" placeholder="Enter your username...">
+                </div>
+                <div class="control">
+                    <label class="label">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Enter your password...">
+                </div>
+                <span><input type="checkbox"> Remember me</span>
+                <div class="control">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+            <div class="link">
+                <a href="">Forgot your password?</a>
+                <p> If you don't have an account, you can sign up <a href="{% url 'signup' %}"> HERE </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

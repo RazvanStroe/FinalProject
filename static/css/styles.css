@@ -1,0 +1,77 @@
+/*signup-css/login-css*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Amiri, sans-serif;
+
+}
+.label{
+    font-size: 1.2em;
+    color: whitesmoke;
+}
+.section{
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+.form-container{
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3));
+    width: 380px;
+    padding: 50px 30px;
+    border-radius: 10px;
+    box-shadow: 7px 7px 60px #000;
+}
+h1{
+    text-transform: uppercase;
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 1em;
+}
+.control{
+    width: 100%;
+    display: block;
+    padding: 10px;
+    color: #222;
+    border: none;
+    outline: none;
+    margin: 1em 0;
+}
+.control input{
+    width: 100%;
+    display: block;
+    padding: 5px;
+    color: #222;
+    border: none;
+    outline: none;
+}
+.control input[type="submit"]{
+    background: midnightblue;
+    color: white;
+    font-size: 1.2em;
+    opacity: .8;
+    transition: opacity .3s ease;
+}
+.control input[type="submit"]:hover{
+    opacity: 1;
+}
+.link{
+    text-align: center;
+}
+.link a{
+    text-decoration: none;
+    color: #fff;
+    opacity: .7;
+    transition: opacity .3s ease;
+}
+.link a:hover{
+    opacity: 1;
+}
+
+
