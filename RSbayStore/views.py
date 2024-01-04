@@ -6,15 +6,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
 import json
+import datetime
+from . utils import cookie_cart, cart_user_data, guest_order
 
 
 def welcome_page(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer)
-        cart_products = order.total_cart_products
-    else:
-        cart_products = []
+    data = cart_user_data(request)
+    cart_products = data['cart_products']
+
     return render(request, template_name="index.html", context={"cart_products": cart_products})
 
 
@@ -29,13 +28,10 @@ def show_all(request):
 
 
 def products_page(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer)
-        cart_products = order.total_cart_products
-    else:
-        cart_products = []
-        products = Product.objects.all()
+    products = Product.objects.all()
+    data = cart_user_data(request)
+    cart_products = data['cart_products']
+
     return render(request, template_name="RSbayStore/products_page.html", context={"products": products, "cart_products": cart_products})
 
 
@@ -77,31 +73,20 @@ def user_logout(request):
 
 
 def cart_page(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer)
-        products = order.orderproduct_set.all()
-        cart_products = order.total_cart_products
-    else:
-        products = []
-        order = {"total_cart_price": 0, "total_cart_products": 0}
-        if not request.user.is_authenticated:
-            messages.error(request, "You have to be logged in to view your cart!")
+    data = cart_user_data(request)
+    cart_products = data['cart_products']
+    order = data['order']
+    products = data['products']
 
-            return redirect("login")
     return render(request, template_name="RSbayStore/cart.html", context={"products": products, "order": order, "cart_products": cart_products})
 
 
 def checkout_page(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer)
-        products = order.orderproduct_set.all()
-        cart_products = order.total_cart_products
-    else:
-        if not request.user.is_authenticated:
-            messages.error(request, message="You have to be logged in to view your checkout!")
-            return redirect("login")
+    data = cart_user_data(request)
+    cart_products = data['cart_products']
+    order = data['order']
+    products = data['products']
+
     return render(request, template_name="RSbayStore/checkout.html", context={"products": products, "order": order, "cart_products": cart_products})
 
 
@@ -114,18 +99,46 @@ def update_product(request):
 
     customer = request.user.customer
     product = Product.objects.get(id=product_id)
-    order, created = Order.objects.get_or_create(customer=customer)
+    order, created = Order.objects.get_or_create(customer=customer, status=False)
     orderproduct, created = OrderProduct.objects.get_or_create(order=order, product=product)
 
     if action == 'add':
         orderproduct.quantity = (orderproduct.quantity + 1)
     elif action == 'remove':
         orderproduct.quantity = (orderproduct.quantity - 1)
+
     orderproduct.save()
+
     if orderproduct.quantity <= 0:
         orderproduct.delete()
 
     return JsonResponse('Added to cart', safe=False)
 
 
+def process_order(request):
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
 
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, status=False)
+
+    else:
+        customer, order = guest_order(request, data)
+
+    total = float(data['form']['total'])
+    order.transaction_id = transaction_id
+
+    if total == float(order.total_cart_price):
+        order.status = True
+    order.save()
+    if order.delivery == True:
+        DeliveryAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['delivery']['address'],
+            city=data['delivery']['city'],
+            country=data['delivery']['country'],
+            postal_code=data['delivery']['postalcode']
+        )
+    return JsonResponse('Payment complete! Thank you for your order!', safe=False)

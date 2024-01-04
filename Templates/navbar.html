@@ -30,11 +30,14 @@
         <div>
             {% if request.user.is_authenticated %}
               Hello, {{request.user}}
+                <a href="{% url 'logout' %}" class="btn btn-dark" onclick="return confirm('Confirm logging out?')">Log out</a>
             {% else %}
               Hello, stranger!
             {% endif %}
-          <a href="{% url 'logout' %}" class="btn btn-dark" onclick="return confirm('Confirm logging out?')">Log out</a>
         </div>
+          <div>
+
+          </div>
 
 <!--        CART BUTTON -->
         <a href="{% url 'cart' %}">

@@ -41,6 +41,7 @@ class Product(models.Model):
     name = models.CharField(max_length=150, null=True)
     price = models.FloatField(null=True)
     description = models.CharField(max_length=200, null=True, blank=True)
+    digital = models.BooleanField(default=False, null=True, blank=False)
     thumbnail = models.ImageField(upload_to="Thumbnails/", null=True, blank=True)
     category = models.CharField(max_length=20, null=True, choices=CATEGORIES)
     tags = models.ManyToManyField(ProductTag)
@@ -65,12 +66,21 @@ class Order(models.Model):
     )
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
     # product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     status = models.CharField(max_length=150, null=True, choices=OrderStatus)
     transaction_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return str(self.id)
+
+    @property
+    def delivery(self):
+        delivery = False
+        orderproducts = self.orderproduct_set.all()
+        for p in orderproducts:
+            if p.product.digital == False:
+                delivery = True
+        return delivery
 
     @property   # unsupported operand type(s) for +: 'int' and 'str'
     def total_cart_price(self):

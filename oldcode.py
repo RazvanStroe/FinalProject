@@ -33,14 +33,40 @@
 
 
 ### cart_page ###
-# if request.user.is_authenticated:
-#     customer = request.user.customer
-#     order, created = Order.objects.get_or_create(customer=customer, status=Order)
-#     products = order.orderproduct_set.all
-# else:
-#     products = []
+# def cart_page(request):
+#     if request.user.is_authenticated:
+#         customer = request.user.customer
+#         order, created = Order.objects.get_or_create(customer=customer, status=False)
+#         products = order.orderproduct_set.all()
+#         cart_products = order.total_cart_products
+#     else:
+#         products = []
+#         order = {"total_cart_price": 0, "total_cart_products": 0, 'shipping':False}
+#         if not request.user.is_authenticated:
+#             messages.error(request, "You have to be logged in to view your cart!")
+#
+#             return redirect("login")
+#     return render(request, template_name="RSbayStore/cart.html", context={"products": products, "order": order, "cart_products": cart_products})
+
 
 ### cart_page ###
+
+
+### checkout_page ###
+# def checkout_page(request):
+#     if request.user.is_authenticated:
+#         customer = request.user.customer
+#         order, created = Order.objects.get_or_create(customer=customer, status=False)
+#         products = order.orderproduct_set.all()
+#         cart_products = order.total_cart_products
+#     else:
+#         cart_products = []
+#         order = {'total_cart_price': 0, 'total_cart_products': 0, 'shipping': False}
+#         if not request.user.is_authenticated:
+#             messages.error(request, message="You have to be logged in to view your checkout!")
+#             return redirect("login")
+#     return render(request, template_name="RSbayStore/checkout.html", context={"products": products, "order": order, "cart_products": cart_products})
+### checkout_page ###
 
 
 ### logo link ###
