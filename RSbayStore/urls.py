@@ -1,22 +1,39 @@
 from django.urls import path
 from RSbayStore import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    # store related pages
     path("", views.welcome_page, name="welcome-page"),
     path("products/", views.products_page, name="products"),
+    path("product/<int:pk>", views.product_view, name="product_view"),
     path("cart/", views.cart_page, name="cart"),
     path("checkout/", views.checkout_page, name="checkout"),
 
-    ## js
+    # js
     path("update-product/", views.update_product, name="update-product"),
     path("process-order/", views.process_order, name="process-order"),
 
-    # proba
-    path("showusers/", views.show_all, name="show-people"),
-    # proba
-
+    # account related pages
     path("signup/", views.user_signup, name="signup"),
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
+    path("account/", views.edit_account, name="account-details"),
+
+    # password change/reset
+    path("reset_password/",
+         auth_views.PasswordResetView.as_view(template_name="RSbayStore/password_reset.html"),
+         name="reset_password"),
+    path("reset_password_sent/",
+         auth_views.PasswordResetDoneView.as_view(template_name="RSbayStore/password_reset_sent.html"),
+         name="password_reset_done"),
+
+    path("reset/<uidb64>/<token>/",
+         auth_views.PasswordResetConfirmView.as_view(template_name="RSbayStore/password_reset_form.html"),
+         name="password_reset_confirm"),
+
+    path("reset_password_complete/",
+         auth_views.PasswordResetCompleteView.as_view(template_name="RSbayStore/password_reset_done.html"),
+         name="password_reset_complete"),
 
 ]

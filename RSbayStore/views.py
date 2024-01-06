@@ -17,22 +17,19 @@ def welcome_page(request):
     return render(request, template_name="index.html", context={"cart_products": cart_products})
 
 
-################################### proba
-def show_all(request):
-    all_users = User.objects.all()
-    users_context = {
-        "users": all_users
-    }
-    return render(request, template_name="RSbayStore/showusers.html", context=users_context)
-################################### proba
-
-
 def products_page(request):
     products = Product.objects.all()
     data = cart_user_data(request)
     cart_products = data['cart_products']
 
     return render(request, template_name="RSbayStore/products_page.html", context={"products": products, "cart_products": cart_products})
+
+
+def product_view(request, pk):
+    data = cart_user_data(request)
+    cart_products = data['cart_products']
+    product = Product.objects.get(id=pk)
+    return render(request, template_name="RSbayStore/product_view.html", context={"product": product, "cart_products": cart_products})
 
 
 def user_signup(request):
@@ -46,6 +43,22 @@ def user_signup(request):
 
             messages.success(request, "Account was succesfully created!")
     return render(request, template_name="RSbayStore/signup.html", context={"form": form})
+
+def edit_account(request):
+    data = cart_user_data(request)
+    cart_products = data['cart_products']
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.customer)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, "Your account has been succesfully updated!")
+            return redirect("account-details")
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.customer)
+    return render(request, template_name="RSbayStore/edit_profile.html", context={'user_form': user_form, 'profile_form': profile_form, "cart_products": cart_products})
 
 
 def user_login(request):

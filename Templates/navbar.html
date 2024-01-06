@@ -8,36 +8,34 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav">
+          <div class="logoicon">RSbayOnline</div>
         <li class="nav-item active"><a class="nav-link" href="{% url 'welcome-page' %}">Home<span class="sr-only"></span></a></li>
         <li class="nav-item active"><a class="nav-link" href="{% url 'products' %}">Products</a></li>
         {% if not request.user.is_authenticated %}
           <li class="nav-item active"><a class="nav-link" href="{% url 'signup' %}">Sign up</a></li>
           <li class="nav-item active" ><a class="nav-link" href="{% url 'login' %}">Login</a></li>
         {% endif %}
-  <!--      proba-->
-        <a class="nav-link" href="{% url 'show-people' %}">-- Users --<span class="sr-only"></span></a>
-  <!--    proba  -->
-
+          {% if request.user.is_authenticated %}
+            <li class="nav-item active"><a class="nav-link" href="{% url 'account-details' %}">Account</a> </li>
+          {% endif %}
+      </ul>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search for a specific product" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-      </ul>
+
       <div class="form-inline my-2 my-lg-0">
 
 <!--        LOG OUT BUTTON -->
-        <div>
+        <div class="loggedinuser">
             {% if request.user.is_authenticated %}
-              Hello, {{request.user}}
+              {{request.user}}
                 <a href="{% url 'logout' %}" class="btn btn-dark" onclick="return confirm('Confirm logging out?')">Log out</a>
             {% else %}
-              Hello, stranger!
+              Welcome stranger!
             {% endif %}
         </div>
-          <div>
-
-          </div>
 
 <!--        CART BUTTON -->
         <a href="{% url 'cart' %}">

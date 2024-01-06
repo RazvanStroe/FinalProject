@@ -1,4 +1,4 @@
-/*signup-css/login-css*/
+/*!*signup-css/login-css*!*/
 *{
     margin: 0;
     padding: 0;
@@ -34,7 +34,7 @@ h1{
     text-align: center;
     margin-bottom: 1em;
 }
-.control{
+.lgn{
     width: 100%;
     display: block;
     padding: 10px;
@@ -43,7 +43,7 @@ h1{
     outline: none;
     margin: 1em 0;
 }
-.control input{
+.lgn input{
     width: 100%;
     display: block;
     padding: 5px;
@@ -51,14 +51,14 @@ h1{
     border: none;
     outline: none;
 }
-.control input[type="submit"]{
+.lgn input[type="submit"]{
     background: midnightblue;
     color: white;
     font-size: 1.2em;
     opacity: .8;
     transition: opacity .3s ease;
 }
-.control input[type="submit"]:hover{
+.lgn input[type="submit"]:hover{
     opacity: 1;
 }
 .link{

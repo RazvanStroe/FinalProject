@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
 
 class Customer(models.Model):
@@ -8,13 +9,22 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=20, null=True)
     age = models.IntegerField(null=True)
     email = models.EmailField(null=True)
-    avatar = models.ImageField(upload_to="Avatar/", null=True, blank=True)
+    avatar = models.ImageField(default='defaultavatar.jpeg', upload_to="Avatar/", null=True, blank=True)
     city = models.CharField(max_length=30, null=True)
     address = models.CharField(max_length=50, null=True)
     joined_time = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return str(self.user)
+
+    # resize avatar function
+    def save(self, *args, **kwargs):
+        super().save()
+        img = Image.open(self.avatar.path)
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
 
 
 class ProductTag(models.Model):

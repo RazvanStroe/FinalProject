@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %} {{product.name}} {% endblock %}
+{% block content %}
+<br><br><br>
+<br><br><br>
+
+
+<div class="container">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-lg-6">
+                <img src="{{ product.thumbnail.url}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-4">
+                <div class="card-body">
+                    <center>
+                        <h5><strong>{{product.name}}</strong></h5>
+                        <br>
+                        <p class="card-text">{{product.description}}</p>
+                        <br><br><br>
+                        <h4>Price:{{product.price}}$</h4>
+                        <a class="btn btn-secondary" href="{% url 'products' %}">&#x21A9; Back</a>
+                        <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn cart-update">Add to cart</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Account{% endblock %}
+{% block content %}
+
+<div class="row my-3 p-3">
+    <img class="rounded-circle account-img" src="{{ user.customer.avatar.url }}" style="cursor: pointer;">
+</div>
+
+<div class="form-content">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label class="small mb-1">Username:</label>
+                        {{ user_form.username }}
+                    <label class="small mb-1">Email:</label>
+                        {{ user_form.email }}
+                    <label class="small mb-1">First name:</label>
+                        {{ profile_form.first_name }}
+                    <label class="small mb-1">Last name:</label>
+                        {{ profile_form.last_name }}
+                    <label class="small mb-1">Age:</label>
+                        {{ profile_form.age }}
+                    <label class="small mb-1">Avatar:</label>
+                        {{ profile_form.avatar }}
+                    <label class="small mb-1">City:</label>
+                        {{ profile_form.city }}
+                    <label class="small mb-1">Address:</label>
+                        {{ profile_form.address }}
+                    <a href="#">Change password</a>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-dark btn-lg">Save changes</button>
+    </form>
+</div>
+
+
+{% endblock %}
