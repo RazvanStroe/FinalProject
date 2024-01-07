@@ -20,14 +20,10 @@
             <li class="nav-item active"><a class="nav-link" href="{% url 'account-details' %}">Account</a> </li>
           {% endif %}
       </ul>
-<!--        <form class="form-inline my-2 my-lg-0 navbar-form">-->
-<!--          <input class="form-control mr-sm-2" type="search" placeholder="Search for a specific product" aria-label="Search">-->
-<!--          <button class="btn btn-success my-2 my-sm-2" type="submit">Search</button>-->
-<!--        </form>-->
-            <form class="form-inline my-2 my-lg-0 navbar-form" action="{% url 'search' %}" method="GET">
-                <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search for a specific product" aria-label="Search">
-                <button class="btn btn-success my-2 my-sm-2" type="submit">Search</button>
-            </form>
+        <form class="form-inline my-2 my-lg-0 navbar-form" action="{% url 'search' %}" method="GET">
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search for a specific product" aria-label="Search">
+            <button class="btn btn-success my-2 my-sm-2" type="submit">Search</button>
+        </form>
 
       <div class="form-inline my-2 my-lg-0">
 
@@ -40,6 +36,9 @@
               Welcome stranger!
             {% endif %}
         </div>
+
+<!--          Add product button-->
+          <a href="{% url 'create-product' %}" class="btn btn-primary">Add product</a>
 
 <!--        CART BUTTON -->
         <a href="{% url 'cart' %}">

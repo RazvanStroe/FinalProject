@@ -40,4 +40,7 @@ urlpatterns = [
     # search
     path('search/', search_view, name='search'),
 
+    # create a new product
+    path('create-product/', views.create_product_view, name="create-product"),
+
 ]

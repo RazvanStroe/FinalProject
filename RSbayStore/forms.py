@@ -58,4 +58,16 @@ class OrderForm(ModelForm):
         fields = '__all__'
 
 
+class CreateProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            'name',
+            'price',
+            'description',
+            'digital',
+            'thumbnail',
+            'category',
+            'tags',
+        ]
 

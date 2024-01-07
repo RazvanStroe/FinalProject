@@ -51,6 +51,17 @@ def products_page(request):
     })
 
 
+def create_product_view(request):
+    if request.method == 'POST':
+        form = CreateProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = CreateProductForm
+
+    return render(request, template_name="RSbayStore/create_product.html", context={'form': form})
+
 def product_view(request, pk):
     data = cart_user_data(request)
     cart_products = data['cart_products']

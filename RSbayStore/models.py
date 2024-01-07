@@ -13,6 +13,7 @@ class Customer(models.Model):
     city = models.CharField(max_length=30, null=True)
     address = models.CharField(max_length=50, null=True)
     joined_time = models.DateTimeField(auto_now_add=True, null=True)
+    is_admin = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user)
