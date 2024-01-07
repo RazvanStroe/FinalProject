@@ -12,6 +12,13 @@
 	font-size: 25px;
 	font-family: Poppins, sans-serif;
 }
+.navbar-form {
+    display: flex;
+    align-items: center;
+}
+.navbar-form .form-control {
+    width: 500px;
+}
 
 body{
 	background-image:url(/static/images/homebackground.jpg);
@@ -19,6 +26,7 @@ body{
 	background-size: cover;
 	background-attachment: fixed;
 	background-color: hsl(0, 0%, 98%);
+	height: 100%;
 }
 
 .box-element{
@@ -153,4 +161,41 @@ input[type="submit"]:hover{
 }
 .loggedinuser{
 	font-weight: bold;
+}
+
+.search-results-container {
+    text-align: center;
+    margin-top: 50px;
+}
+.search-results-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+.search-results-container ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+.product-thumbnail {
+    height: 220px;
+    width: 100%;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	-webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+}
+
+.pagination {
+    text-align: center;
+}
+
+.pagination .step-links {
+    display: inline-block;
+    margin-top: 10px;
+	text-align: center;
+}
+
+.pagination .current {
+    display: inline-block;
+    margin: 0 10px;
 }

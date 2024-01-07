@@ -2,16 +2,21 @@
 {% load static %}
 {% block title %}Account{% endblock %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
 
-<div class="row my-3 p-3">
-    <img class="rounded-circle account-img" src="{{ user.customer.avatar.url }}" style="cursor: pointer;">
-</div>
+<div class="container my-3">
+    <div class="row justify-content-center">
+        <div class="col-md-5 text-center">
+            <div class="p-3">
+                <img class="rounded-circle account-img" src="{{ user.customer.avatar.url }}" style="cursor: pointer;">
+            </div>
+        </div>
+    </div>
 
-<div class="form-content">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="col-md-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5 form-content">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-group">
                     <label class="small mb-1">Username:</label>
                         {{ user_form.username }}
@@ -29,13 +34,13 @@
                         {{ profile_form.city }}
                     <label class="small mb-1">Address:</label>
                         {{ profile_form.address }}
-                    <a href="#">Change password</a>
-                    <hr>
                 </div>
-            </div>
+                <a href="{% url 'reset_password' %}">Change password</a>
+                <hr>
+                <button type="submit" class="btn btn-dark btn-lg">Save changes</button>
+            </form>
         </div>
-        <button type="submit" class="btn btn-dark btn-lg">Save changes</button>
-    </form>
+    </div>
 </div>
 
 

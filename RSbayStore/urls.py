@@ -1,6 +1,7 @@
 from django.urls import path
 from RSbayStore import views
 from django.contrib.auth import views as auth_views
+from RSbayStore.views import search_view
 
 urlpatterns = [
     # store related pages
@@ -35,5 +36,8 @@ urlpatterns = [
     path("reset_password_complete/",
          auth_views.PasswordResetCompleteView.as_view(template_name="RSbayStore/password_reset_done.html"),
          name="password_reset_complete"),
+
+    # search
+    path('search/', search_view, name='search'),
 
 ]

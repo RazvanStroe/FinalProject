@@ -86,3 +86,17 @@
 # 	color:hsl(0, 0%, 30%);
 # }
 ### headers css ##
+
+# CATEGORIES = (
+#     ('Mens clothing', 'Mens clothing'),
+#     ('Womens clothing', 'Womens clothing'),
+#     ('Kids clothing', 'Kids clothing'),
+#     ('Computer', 'Computer'),
+#     ('Notebooks', 'Notebooks'),
+#     ('TVs', 'Tvs'),
+#     ('Audio', 'Audio'),
+#     ('Smartphones', 'Smartphones'),
+#     ('Accessories', 'Accessories'),
+#     ('Bicycles', 'Bicycles'),
+#     ('Fitness', 'Fitness'),
+# )

@@ -1,0 +1,51 @@
+.form-content form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-content label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-content input,
+.form-content select {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-content button {
+    background-color: midnightblue;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 130px;
+}
+
+.form-content button:hover {
+    background-color: #001f3f;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.account-img {
+    margin-top: 45px;
+    margin-bottom: 10px;
+}
+.text-center {
+    text-align: center;
+}
+
+.form-content {
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}

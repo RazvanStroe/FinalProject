@@ -8,7 +8,7 @@ from django.http import JsonResponse
 import json
 import datetime
 from . utils import cookie_cart, cart_user_data, guest_order
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def welcome_page(request):
     data = cart_user_data(request)
@@ -18,11 +18,37 @@ def welcome_page(request):
 
 
 def products_page(request):
+    # Fetch all products
     products = Product.objects.all()
+
+    # retrieve cart data
     data = cart_user_data(request)
     cart_products = data['cart_products']
 
-    return render(request, template_name="RSbayStore/products_page.html", context={"products": products, "cart_products": cart_products})
+    # Fetch categories
+    categories = Product.CATEGORIES
+
+    # Filter products based on the selected category
+    selected_category = request.GET.get('category')
+    if selected_category:
+        products = Product.objects.filter(category=selected_category)
+
+    # Pagination
+    page = request.GET.get('page', 1)
+    paginator = Paginator(products, 6)
+
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+    return render(request, template_name="RSbayStore/products_page.html", context={
+        "products": products,
+        "cart_products": cart_products,
+        "categories": categories,
+        "selected_category": selected_category,
+    })
 
 
 def product_view(request, pk):
@@ -30,6 +56,26 @@ def product_view(request, pk):
     cart_products = data['cart_products']
     product = Product.objects.get(id=pk)
     return render(request, template_name="RSbayStore/product_view.html", context={"product": product, "cart_products": cart_products})
+
+def search_view(request):
+    query = request.GET.get('q')
+
+    if query:
+        results = Product.objects.filter(name__icontains=query)
+        if results.count() == 1:
+            product = results.first()
+            return redirect('product_view', pk=product.pk)
+        page = request.GET.get('page', 1)
+        paginator = Paginator(results, 6)
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            results = paginator.page(1)
+        except EmptyPage:
+            results = paginator.page(paginator.num_pages)
+    else:
+        results = []
+    return render(request, template_name='RSbayStore/search_results.html', context={'results': results, 'query': query})
 
 
 def user_signup(request):
@@ -59,6 +105,9 @@ def edit_account(request):
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.customer)
     return render(request, template_name="RSbayStore/edit_profile.html", context={'user_form': user_form, 'profile_form': profile_form, "cart_products": cart_products})
+
+# change password from account settings
+
 
 
 def user_login(request):
