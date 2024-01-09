@@ -40,8 +40,11 @@ urlpatterns = [
     # search
     path("search/", search_view, name='search'),
 
-    # create a new product
+    # create a new product (admin)
     path("create-product/", views.create_product_view, name="create-product"),
+
+    # delete a product (admin)
+    path('delete-product/<int:product_id>/', views.delete_product, name='delete-product'),
 
     # users orders overview
     path("order-overview/", views.order_overview, name="order-overview"),

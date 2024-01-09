@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import *
 from .models import *
@@ -62,6 +62,15 @@ def create_product_view(request):
 
     return render(request, template_name="RSbayStore/create_product.html", context={'form': form})
 
+
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('products')
+    return render(request, template_name="RSbayStore/delete_product.html", context={'product': product})
+
 def product_view(request, pk):
     data = cart_user_data(request)
     cart_products = data['cart_products']
@@ -100,6 +109,7 @@ def user_signup(request):
             Customer.objects.create(user=user)
 
             messages.success(request, "Account was succesfully created!")
+            return redirect('login')
     return render(request, template_name="RSbayStore/signup.html", context={"form": form})
 
 def edit_account(request):

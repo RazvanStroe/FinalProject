@@ -37,13 +37,16 @@
             {% endif %}
         </div>
 
-<!--        Add product button-->
-          <a href="{% url 'create-product' %}" class="btn btn-primary">Add product</a>
+<!--        Add product button, only for admin-->
+          {% if request.user.is_authenticated and request.user.is_staff %}
+            <a href="{% url 'create-product' %}" class="btn btn-primary">Add product</a>
+          {% endif %}
 <!--        Users orders button-->
+          {% if request.user.is_authenticated %}
             <div class="btn orders-button">
                 <a href="{% url 'order-overview' %}" class="btn btn-primary">My orders</a>
             </div>
-
+          {% endif %}
 <!--        CART BUTTON -->
         <a href="{% url 'cart' %}">
             <img  id="cart-icon" src="{% static 'images/cart.png' %}">
