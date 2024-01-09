@@ -38,9 +38,15 @@ urlpatterns = [
          name="password_reset_complete"),
 
     # search
-    path('search/', search_view, name='search'),
+    path("search/", search_view, name='search'),
 
     # create a new product
-    path('create-product/', views.create_product_view, name="create-product"),
+    path("create-product/", views.create_product_view, name="create-product"),
+
+    # users orders overview
+    path("order-overview/", views.order_overview, name="order-overview"),
+
+    # contact
+    path("contact-page/", views.contact_page, name="contact-page"),
 
 ]

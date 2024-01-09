@@ -76,13 +76,13 @@ class Order(models.Model):
         ('Delivered', 'Delivered')
     )
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    # product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    status = models.CharField(max_length=150, null=True, choices=OrderStatus)
+    status = models.CharField(max_length=150, null=True, choices=OrderStatus, default='Pending')
     transaction_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return str(self.id)
+
 
     @property
     def delivery(self):

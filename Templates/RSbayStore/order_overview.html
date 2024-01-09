@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %} Order overview {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/order_overview.css' %}">
+
+<div class="order-container">
+  <h2>Your orders:</h2>
+
+  {% if orders_with_products %}
+    <div class="order">
+      {% for order_data in orders_with_products %}
+        <li>
+          Order ID: {{ order_data.order.id }}<br>
+          Status: {{ order_data.order.status }}<br>
+          Total Price: ${{ order_data.order.total_cart_price|floatformat:2 }}<br>
+          Date Created: {{ order_data.order.date_created }}<br>
+          <br><br>
+          <ul>
+            {% for ordered_product in order_data.ordered_products %}
+              <li>
+                {{ ordered_product.product.name }}<br>
+                Quantity: {{ ordered_product.quantity }}<br>
+                <img src="{{ ordered_product.product.thumbnail.url }}" alt="Product Thumbnail">
+              </li>
+            {% endfor %}
+          </ul>
+
+<!--          <a href="{% url 'order-overview' %}">View Details</a>-->
+        </li>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No orders yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

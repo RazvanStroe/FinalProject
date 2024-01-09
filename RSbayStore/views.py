@@ -66,6 +66,7 @@ def product_view(request, pk):
     data = cart_user_data(request)
     cart_products = data['cart_products']
     product = Product.objects.get(id=pk)
+
     return render(request, template_name="RSbayStore/product_view.html", context={"product": product, "cart_products": cart_products})
 
 def search_view(request):
@@ -203,9 +204,9 @@ def process_order(request):
     order.transaction_id = transaction_id
 
     if total == float(order.total_cart_price):
-        order.status = True
+        order.status = 'Pending' # True
     order.save()
-    if order.delivery == True:
+    if order.delivery == 'Pending': # True
         DeliveryAddress.objects.create(
             customer=customer,
             order=order,
@@ -215,3 +216,21 @@ def process_order(request):
             postal_code=data['delivery']['postalcode']
         )
     return JsonResponse('Payment complete! Thank you for your order!', safe=False)
+
+def order_overview(request):
+    user_orders = Order.objects.filter(customer__user=request.user)
+
+    # fetch ordered products for each order
+    orders_with_products = []
+    for order in user_orders:
+        ordered_products = OrderProduct.objects.filter(order=order)
+        orders_with_products.append({'order': order, 'ordered_products': ordered_products})
+
+    return render(request, template_name="RSbayStore/order_overview.html", context={'orders_with_products': orders_with_products})
+
+
+def contact_page(request):
+    data = cart_user_data(request)
+    cart_products = data['cart_products']
+
+    return render(request, template_name="RSbayStore/contact.html", context={"cart_products": cart_products})

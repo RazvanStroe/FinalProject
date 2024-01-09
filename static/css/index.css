@@ -78,6 +78,10 @@ body{
 .btn{
 	border-radius: 15px;
 }
+.btn-dark {
+	margin-left: 3px;
+	margin-right: 10px;
+}
 
 .row-image{
 	width: 150px;
